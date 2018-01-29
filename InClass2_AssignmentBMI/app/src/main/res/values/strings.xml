@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">BMI Calculator</string>
+    <string name="age_label">Age</string>
+    <string name="weight_label">Weight</string>
+    <string name="height_label">Height</string>
+    <string name="result_label">Result</string>
+    <string name="normal_bmi">Keep up the good work!!</string>
+</resources>
