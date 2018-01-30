@@ -5,24 +5,15 @@
     android:id="@+id/edit_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="20dp"
     android:orientation="vertical"
-    android:padding="30dp"
+    android:padding="15dp"
     tools:context="com.example.test.myapplication.EditActivity">
 
     <TextView
-        android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Edit Information"
+        android:text="@string/edit_information"
         android:textAlignment="center"
-        android:padding="30dp"
-        android:textSize="30sp" />
+        android:textSize="18sp" />
 
-    <EditText
-        android:id="@+id/edit_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"/>
 </LinearLayout>
