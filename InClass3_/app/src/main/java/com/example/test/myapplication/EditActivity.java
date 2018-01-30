@@ -54,6 +54,8 @@ public class EditActivity extends AppCompatActivity {
         button.setLayoutParams(params);
         button.setText(getResources().getText(R.string.save));
 
+
+
         layout.addView(button);
 
 

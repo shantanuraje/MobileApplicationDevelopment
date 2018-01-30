@@ -24,7 +24,7 @@ public class DisplayActivity extends AppCompatActivity {
         textView = findViewById(R.id.department_value);
         textView.setText(student.getDepartment());
         textView = findViewById(R.id.mood_value);
-        textView.setText(student.getMood());
+        textView.setText(student.getMood().toString());
     }
 
     @Override

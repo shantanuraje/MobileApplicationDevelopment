@@ -1,10 +1,12 @@
 package com.example.test.myapplication;
 
+import java.io.Serializable;
+
 /**
  * Created by shant on 1/29/2018.
  */
 
-public class Student {
+public class Student implements Serializable {
     private String name;
     private String email;
     private String department;

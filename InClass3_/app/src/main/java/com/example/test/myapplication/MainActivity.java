@@ -1,5 +1,6 @@
 package com.example.test.myapplication;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -38,13 +39,23 @@ public class MainActivity extends AppCompatActivity {
         Integer deparment_id = rg_department.getCheckedRadioButtonId();
         RadioButton button = findViewById(deparment_id);
 
+        if(name != null && "".equals(name)) {
+            tv_name.setError("Enter a name");
+            return;
+        }
+        if(email != null && "".equals(email) && email.length() < 3 && !email.contains("@")) {
+            tv_email.setError("Enter a valid email");
+            return;
+        }
+
         String department = button.getText().toString(); // [1: SIS, 2: CS, 3:BIO, 4: Others]
 
         Student student = new Student(name, email, department, mood);
 
         Log.d("demo", student.toString());
 
-
-
+        Intent intent = new Intent(getBaseContext(), DisplayActivity.class);
+        intent.putExtra("student", student);
+        startActivity(intent);
     }
 }
