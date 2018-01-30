@@ -44,16 +44,25 @@ public class EditActivity extends AppCompatActivity {
 
         // insert respective view based on request
         if(requestCode == DisplayActivity.editCode[0]) {
+            TextView textView = new TextView(getBaseContext());
+            textView.setText(R.string.student_name);
+            edit_layout.addView(textView);
             EditText name = new EditText(getBaseContext());
             view = name;
             name.setText(value);
             edit_layout.addView(name);
         } else if(requestCode == DisplayActivity.editCode[1]) {
+            TextView textView = new TextView(getBaseContext());
+            textView.setText(R.string.student_email);
+            edit_layout.addView(textView);
             EditText email = new EditText(getBaseContext());
             view = email;
             email.setText(value);
             edit_layout.addView(email);
         } else if (requestCode == DisplayActivity.editCode[2]){
+            TextView textView = new TextView(getBaseContext());
+            textView.setText(R.string.student_department);
+            edit_layout.addView(textView);
             RadioGroup rg_department =  new RadioGroup(getBaseContext());
             view = rg_department;
             RadioButton rb_edit_1 = new RadioButton(rg_department.getContext());
@@ -82,6 +91,9 @@ public class EditActivity extends AppCompatActivity {
             }
             edit_layout.addView(rg_department);
         } else if (requestCode == DisplayActivity.editCode[3]){
+            TextView textView = new TextView(getBaseContext());
+            textView.setText(R.string.mood);
+            edit_layout.addView(textView);
             SeekBar sb_mood = new SeekBar(getBaseContext());
             view = sb_mood;
             sb_mood.setProgress(Integer.parseInt(value));

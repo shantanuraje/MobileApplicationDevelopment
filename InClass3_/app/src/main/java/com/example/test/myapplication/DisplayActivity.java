@@ -80,7 +80,8 @@ public class DisplayActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 TextView textView = findViewById(R.id.mood_value);
-                Intent intent = new Intent(getBaseContext(), EditActivity.class);
+                Intent intent = new Intent();
+                intent.setAction("android.intent.action.EDIT");
                 intent.putExtra("request_code", editCode[3]);
                 intent.putExtra("value", textView.getText());
                 startActivityForResult(intent, editCode[3]);

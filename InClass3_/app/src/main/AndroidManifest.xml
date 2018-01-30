@@ -11,7 +11,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
-            android:label="Main Activityc">
+            android:label="Main Activity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -21,7 +21,11 @@
         <activity
             android:name=".DisplayActivity"
             android:label="Display Activity" />
-        <activity android:name=".EditActivity" android:label="@string/edit_activity"></activity>
+        <activity android:name=".EditActivity" android:label="@string/edit_activity">
+            <intent-filter>
+                <action android:name="android.intent.action.EDIT" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter></activity>
     </application>
 
 </manifest>
