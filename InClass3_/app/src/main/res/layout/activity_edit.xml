@@ -9,7 +9,7 @@
     android:padding="15dp"
     tools:context="com.example.test.myapplication.EditActivity">
 
-    <!--<TextView
+    <TextView
         android:id="@+id/textView"
 
         android:layout_width="match_parent"
@@ -18,7 +18,8 @@
         android:textAlignment="center"
         android:textSize="18sp" />
 
-    <EditText
+
+    <!-- <EditText
         android:id="@+id/edit_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
