@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">Student Registration Form</string>
+    <string name="edit_activity">Edit Activity</string>
+    <string name="edit_information">Edit Information</string>
     <string name="student_name">Name</string>
     <string name="student_email">Email</string>
     <string name="student_department">Department</string>
@@ -9,5 +11,6 @@
     <string name="department_4">Others</string>
     <string name="mood">Your current mood</string>
     <string name="submit">Submit</string>
+    <string name="save">Save</string>
 
 </resources>
