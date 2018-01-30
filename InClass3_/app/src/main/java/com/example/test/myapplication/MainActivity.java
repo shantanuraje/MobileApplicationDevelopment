@@ -11,6 +11,7 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
+    String department; // [1: SIS, 2: CS, 3:BIO, 4: Others]
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,10 +34,13 @@ public class MainActivity extends AppCompatActivity {
 
         String name = tv_name.getText().toString();
         String email = tv_email.getText().toString();
-        Integer department = rg_department.getCheckedRadioButtonId(); // [1: SIS, 2: CS, 3:BIO, 4: Others]
         Integer mood = sb_mood.getProgress();
+        Integer deparment_id = rg_department.getCheckedRadioButtonId();
+        RadioButton button = findViewById(deparment_id);
 
-        Student student = new Student(name, email, department.toString(), mood);
+        String department = button.getText().toString(); // [1: SIS, 2: CS, 3:BIO, 4: Others]
+
+        Student student = new Student(name, email, department, mood);
 
         Log.d("demo", student.toString());
 
