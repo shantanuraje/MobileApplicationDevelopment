@@ -3,6 +3,7 @@ package com.example.test.myapplication;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -37,10 +38,24 @@ public class EditActivity extends AppCompatActivity {
 
         layout.addView(textView);
 
+        if(requestCode == DisplayActivity.editCode[0]) {
+            EditText name = new EditText(getBaseContext());
+            layout.addView(name);
+        } else if(requestCode == DisplayActivity.editCode[1]) {
+            EditText name = new EditText(getBaseContext());
+            layout.addView(name);
+        } else if(requestCode == DisplayActivity.editCode[2]) {
+
+        } else if(requestCode == DisplayActivity.editCode[3]) {
+
+        }
+
         Button button = new Button(getBaseContext());
         button.setLayoutParams(params);
         button.setText(getResources().getText(R.string.save));
 
         layout.addView(button);
+
+
     }
 }

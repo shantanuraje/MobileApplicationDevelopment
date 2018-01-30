@@ -16,11 +16,21 @@ public class DisplayActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display);
         setTitle("Display Activity");
+        Student student = (Student) getIntent().getExtras().getSerializable("student");
+        TextView textView = findViewById(R.id.name_value);
+        textView.setText(student.getName());
+        textView = findViewById(R.id.email_value);
+        textView.setText(student.getEmail());
+        textView = findViewById(R.id.department_value);
+        textView.setText(student.getDepartment());
+        textView = findViewById(R.id.mood_value);
+        textView.setText(student.getMood());
     }
 
     @Override
     protected void onStart() {
         super.onStart();
+
 
         ImageView imageView = findViewById(R.id.edit_image_1);
         imageView.setOnClickListener(new View.OnClickListener() {
