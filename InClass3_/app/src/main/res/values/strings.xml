@@ -2,5 +2,12 @@
     <string name="app_name">Student Registration Form</string>
     <string name="student_name">Name</string>
     <string name="student_email">Email</string>
+    <string name="student_department">Department</string>
+    <string name="department_1">SIS</string>
+    <string name="department_2">CS</string>
+    <string name="department_3">BIO</string>
+    <string name="department_4">Others</string>
+    <string name="mood">Your current mood</string>
+    <string name="submit">Submit</string>
 
 </resources>

@@ -17,7 +17,14 @@
         android:id="@+id/et_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
         android:hint="@string/student_email"/>
+
+    <TextView
+        android:id="@+id/tv_department"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/student_department" />
 
     <RadioGroup
         android:id="@+id/rg_department"
@@ -25,33 +32,52 @@
         android:layout_height="wrap_content">
 
         <RadioButton
-            android:id="@+id/radioButton"
+            android:id="@+id/rb_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="RadioButton" />
+            android:text="RadioButton"
+            tools:text="@string/department_1" />
 
         <RadioButton
-            android:id="@+id/radioButton2"
+            android:id="@+id/rb_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="RadioButton" />
+            android:text="@string/department_2" />
 
         <RadioButton
-            android:id="@+id/radioButton3"
+            android:id="@+id/rb_3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="RadioButton" />
+            android:text="@string/department_3" />
 
         <RadioButton
-            android:id="@+id/radioButton4"
+            android:id="@+id/rb_4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="RadioButton" />
+            android:text="@string/department_4" />
     </RadioGroup>
 
+    <TextView
+        android:id="@+id/tv_mood"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/mood" />
+
+    <SeekBar
+        android:id="@+id/sb_mood"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp" />
+
+    <Button
+        android:id="@+id/button_submit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/submit" />
 
 </LinearLayout>
