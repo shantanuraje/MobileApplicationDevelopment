@@ -84,7 +84,7 @@ public class DisplayActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        String value = data.getExtras().getString("value");
+        String value = data.getExtras().get("value").toString();
         if(requestCode == editCode[0]) {
             TextView textView = findViewById(R.id.name_value);
             textView.setText(value);

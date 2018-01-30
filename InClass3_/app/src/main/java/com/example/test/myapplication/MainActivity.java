@@ -39,15 +39,20 @@ public class MainActivity extends AppCompatActivity {
         Integer deparment_id = rg_department.getCheckedRadioButtonId();
         RadioButton button = findViewById(deparment_id);
 
-        if(name != null && "".equals(name)) {
+        boolean failure = false;
+
+        if(name == null || "".equals(name)) {
             tv_name.setError("Enter a name");
-            return;
+            failure = true;
         }
-        if(email != null && "".equals(email) && email.length() < 3 && !email.contains("@")) {
+        if(email == null || "".equals(email) || email.length() < 3 || !email.contains("@")) {
             tv_email.setError("Enter a valid email");
-            return;
+            failure = true;
         }
 
+        if(failure) {
+            return;
+        }
         String department = button.getText().toString(); // [1: SIS, 2: CS, 3:BIO, 4: Others]
 
         Student student = new Student(name, email, department, mood);
