@@ -1,3 +1,9 @@
+/**
+ * Assignment 3
+ * File name: EditActivity.java
+ * Nilanjan Mhatre (Student Id: 801045013)
+ * Shantanu Rajenimbalkar (Student Id: 800968033)
+ */
 package com.example.test.myapplication;
 
 import android.content.Intent;
@@ -29,14 +35,14 @@ public class EditActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-
+        //get request code of field requested to be edited
         final Integer requestCode = getIntent().getExtras().getInt("request_code");
         requestCodeNumber = requestCode;
         String value = getIntent().getExtras().getString("value");
-
+        //get defined linear layout to dynamically insert views into it.
         LinearLayout edit_layout = (LinearLayout) findViewById(R.id.edit_layout);
 
-
+        // insert respective view based on request
         if(requestCode == DisplayActivity.editCode[0]) {
             EditText name = new EditText(getBaseContext());
             view = name;
@@ -114,7 +120,7 @@ public class EditActivity extends AppCompatActivity {
                     }
                     intent.putExtra("value", ((EditText) view).getText());
                 }
-                setResult(requestCodeNumber, intent);
+                setResult(requestCodeNumber, intent); //return result to intent
                 finish();
             }
         });

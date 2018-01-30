@@ -1,3 +1,9 @@
+/**
+ * Assignment 3
+ * File name: DisplayActivity.java
+ * Nilanjan Mhatre (Student Id: 801045013)
+ * Shantanu Rajenimbalkar (Student Id: 800968033)
+ */
 package com.example.test.myapplication;
 
 import android.content.Intent;
@@ -16,6 +22,7 @@ public class DisplayActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_display);
         setTitle("Display Activity");
+        //get student information from intent
         Student student = (Student) getIntent().getExtras().getSerializable("student");
         TextView textView = findViewById(R.id.name_value);
         textView.setText(student.getName());
@@ -31,7 +38,7 @@ public class DisplayActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-
+        // display edit image button for respective student records
         ImageView imageView = findViewById(R.id.edit_image_1);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,6 +92,7 @@ public class DisplayActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         String value = data.getExtras().get("value").toString();
+        //check edit code to check which field was requested to be edited
         if(requestCode == editCode[0]) {
             TextView textView = findViewById(R.id.name_value);
             textView.setText(value);

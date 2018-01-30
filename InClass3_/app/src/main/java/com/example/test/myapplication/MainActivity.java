@@ -1,3 +1,9 @@
+/**
+ * Assignment 3
+ * File name: MainActivity.java
+ * Nilanjan Mhatre (Student Id: 801045013)
+ * Shantanu Rajenimbalkar (Student Id: 800968033)
+ */
 package com.example.test.myapplication;
 
 import android.content.Intent;
@@ -29,17 +35,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void submit(){
+        //define views
         TextView tv_name = findViewById(R.id.et_name);
         TextView tv_email = findViewById(R.id.et_email);
         RadioGroup rg_department = findViewById(R.id.rg_department);
         SeekBar sb_mood = findViewById(R.id.sb_mood);
 
+        //get data from views
         String name = tv_name.getText().toString();
         String email = tv_email.getText().toString();
         Integer mood = sb_mood.getProgress();
         Integer deparment_id = rg_department.getCheckedRadioButtonId();
         RadioButton button = findViewById(deparment_id);
 
+        //input name and email validation
         boolean failure = false;
 
         if(name == null || "".equals(name)) {
@@ -60,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
 
         Log.d("demo", student.toString());
 
+        // launch display activity using explicit intents
         Intent intent = new Intent(getBaseContext(), DisplayActivity.class);
         intent.putExtra("student", student);
         startActivity(intent);
