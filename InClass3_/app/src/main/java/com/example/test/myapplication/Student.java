@@ -55,6 +55,8 @@ public class Student {
         return "Student{" +
                 "name='" + name + '\'' +
                 ", email='" + email + '\'' +
+                ", department='" + department + '\'' +
+                ", mood=" + mood +
                 '}';
     }
 }

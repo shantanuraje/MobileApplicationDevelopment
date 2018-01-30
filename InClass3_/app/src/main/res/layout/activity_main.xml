@@ -11,14 +11,16 @@
         android:id="@+id/et_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/student_name" />
+        android:hint="@string/student_name"
+        android:inputType="textPersonName"/>
 
     <EditText
         android:id="@+id/et_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
-        android:hint="@string/student_email"/>
+        android:hint="@string/student_email"
+        android:inputType="textEmailAddress"/>
 
     <TextView
         android:id="@+id/tv_department"
@@ -36,8 +38,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="RadioButton"
-            tools:text="@string/department_1" />
+            android:checked="true"
+            android:text="@string/department_1" />
 
         <RadioButton
             android:id="@+id/rb_2"
