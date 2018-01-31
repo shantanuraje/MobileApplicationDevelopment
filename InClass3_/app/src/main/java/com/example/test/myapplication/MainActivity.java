@@ -17,6 +17,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     String department; // [1: SIS, 2: CS, 3:BIO, 4: Others]
@@ -30,6 +31,28 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 submit();
+            }
+        });
+
+        SeekBar seekBar = findViewById(R.id.sb_mood);
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){
+
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress,
+                                          boolean fromUser) {
+                // TODO Auto-generated method stub
+                TextView seekBarValue = findViewById(R.id.tv_mood_value);
+                seekBarValue.setText(String.valueOf(progress));
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                // TODO Auto-generated method stub
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                // TODO Auto-generated method stub
             }
         });
     }
@@ -50,17 +73,25 @@ public class MainActivity extends AppCompatActivity {
 
         //input name and email validation
         boolean failure = false;
+        StringBuilder toastMessage = new StringBuilder("Please enter a valid input for the following fields : ");
 
         if(name == null || "".equals(name)) {
             tv_name.setError("Enter a valid name");
+            toastMessage.append("Name");
             failure = true;
         }
         if(email == null || "".equals(email) || email.length() < 3 || !email.contains("@") || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             tv_email.setError("Enter a valid email");
+            if(failure) {
+                toastMessage.append(", ");
+            }
+            toastMessage.append("email");
             failure = true;
         }
 
         if(failure) {
+            Toast toast = Toast.makeText(getBaseContext(), toastMessage.toString(), Toast.LENGTH_LONG);
+            toast.show();
             return;
         }
         String department = button.getText().toString(); // [1: SIS, 2: CS, 3:BIO, 4: Others]

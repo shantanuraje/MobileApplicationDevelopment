@@ -19,6 +19,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class EditActivity extends AppCompatActivity {
 
@@ -94,11 +95,35 @@ public class EditActivity extends AppCompatActivity {
             TextView textView = new TextView(getBaseContext());
             textView.setText(R.string.mood);
             edit_layout.addView(textView);
+            TextView moodValue = new TextView(getBaseContext());
+            moodValue.setId(R.id.tv_mood_value);
+            moodValue.setText(value);
+            edit_layout.addView(moodValue);
             SeekBar sb_mood = new SeekBar(getBaseContext());
             view = sb_mood;
             sb_mood.setProgress(Integer.parseInt(value));
             edit_layout.addView(sb_mood);
 
+            sb_mood.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener(){
+
+                @Override
+                public void onProgressChanged(SeekBar seekBar, int progress,
+                                              boolean fromUser) {
+                    // TODO Auto-generated method stub
+                    TextView moodValue = findViewById(R.id.tv_mood_value);
+                    moodValue.setText(String.valueOf(progress));
+                }
+
+                @Override
+                public void onStartTrackingTouch(SeekBar seekBar) {
+                    // TODO Auto-generated method stub
+                }
+
+                @Override
+                public void onStopTrackingTouch(SeekBar seekBar) {
+                    // TODO Auto-generated method stub
+                }
+            });
         }
 
         Button button = new Button(getBaseContext());
@@ -121,6 +146,7 @@ public class EditActivity extends AppCompatActivity {
                     String value = ((EditText) view).getText().toString();
                     if(value == null || "".equals(value) || value.length() < 3 || !value.contains("@") || !Patterns.EMAIL_ADDRESS.matcher(value).matches()) {
                         ((EditText) view).setError("Enter a valid email");
+                        Toast.makeText(getBaseContext(), "Enter a valid email", Toast.LENGTH_SHORT).show();
                         return;
                     }
                     intent.putExtra("value", value);
@@ -128,6 +154,7 @@ public class EditActivity extends AppCompatActivity {
                     String value = ((EditText) view).getText().toString();
                     if(value == null || "".equals(value)) {
                         ((EditText)view).setError("Enter a valid name");
+                        Toast.makeText(getBaseContext(), "Enter a valid name", Toast.LENGTH_SHORT).show();
                         return;
                     }
                     intent.putExtra("value", ((EditText) view).getText());
