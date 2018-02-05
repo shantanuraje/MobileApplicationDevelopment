@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">Task Manager</string>
+
+    <string name="title_label">Title</string>
+    <string name="date_label">Date</string>
+    <string name="time_label">Time</string>
+
+    <string name="priority_label">Priority</string>
+    <string name="priority_high_label">High</string>
+    <string name="priority_medium_label">Medium</string>
+    <string name="priority_low_label">Low</string>
+
+    <string name="save_button_label">Save</string>
+    <string name="no_tasks_label">No Tasks created. Click the add icon to create tasks</string>
+
+    <string name="title_error">Invalid title</string>
+    <string name="date_error">Invalid date</string>
+    <string name="time_error">Invalid time</string>
+
+    <string name="am">AM</string>
+    <string name="pm">PM</string>
+</resources>
