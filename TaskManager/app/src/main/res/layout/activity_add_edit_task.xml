@@ -4,69 +4,109 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_margin="5dp"
     android:orientation="vertical"
-    android:padding="10dp"
     tools:context="mad.nil.taskmanager.AddEditTask">
 
-    <EditText
-        android:id="@+id/title_value"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        style="@style/titleBarBackground"
+        >
+
+        <ImageView
+            android:id="@+id/dxLogo"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:layout_marginLeft="5dp"
+            android:src="@drawable/task_icon" />
+
+        <TextView
+            android:id="@+id/titleHeading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/titleBarHeading"
+            android:layout_marginLeft="10dp"
+            android:textSize="30dp"
+            />
+
+    </LinearLayout>
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_margin="5dp"
-        android:hint="@string/title_label" />
-
-    <EditText
-        android:id="@+id/date_value"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:hint="@string/date_label" />
-
-    <EditText
-        android:id="@+id/time_value"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:hint="@string/time_label" />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="10dp"
-        android:text="@string/priority_label" />
-
-    <RadioGroup
-        android:id="@+id/priority_value"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp">
-
-        <RadioButton
-            android:checked="true"
+        android:orientation="vertical"
+        android:padding="10dp"
+        tools:context="mad.nil.taskmanager.AddEditTask">
+        <EditText
+            android:id="@+id/title_value"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/priority_high_label" />
+            android:layout_margin="5dp"
+            android:hint="@string/title_label"
+            android:maxLength="20"/>
 
-        <RadioButton
+        <EditText
+            android:id="@+id/date_value"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/priority_medium_label" />
+            android:layout_margin="5dp"
+            android:hint="@string/date_label" />
 
-        <RadioButton
+        <EditText
+            android:id="@+id/time_value"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/priority_low_label" />
-    </RadioGroup>
+            android:layout_margin="5dp"
+            android:hint="@string/time_label" />
 
-    <Button
-        android:id="@+id/save_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/save_button_label"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="10dp"
+            android:text="@string/priority_label" />
+
+        <RadioGroup
+            android:id="@+id/priority_value"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp">
+
+            <RadioButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/priority_high_label" />
+
+            <RadioButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/priority_medium_label" />
+
+            <RadioButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/priority_low_label" />
+        </RadioGroup>
+
+        <Button
+            android:id="@+id/save_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/save_button_label"/>
+
+        <Button
+            android:id="@+id/cancel_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/cancel_button_label" />
+    </LinearLayout>
 </LinearLayout>

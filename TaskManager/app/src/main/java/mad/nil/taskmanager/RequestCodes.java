@@ -6,8 +6,10 @@ package mad.nil.taskmanager;
 
 public enum /**/RequestCodes {
 
-    ADD_CODE(0),
-    EDIT_CODE(1),
+
+    CANCEL_CODE(0),
+    ADD_CODE(1),
+    EDIT_CODE(2),
 
     TASK("task"),
     INDEX("index"),

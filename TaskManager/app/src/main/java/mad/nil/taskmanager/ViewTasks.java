@@ -1,9 +1,14 @@
 package mad.nil.taskmanager;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -13,23 +18,35 @@ import android.widget.Toast;
 import java.text.SimpleDateFormat;
 import java.util.LinkedList;
 import java.util.ListIterator;
+/**
+ * Homework 1
+ * File name: ViewTasks.java
+ * Nilanjan Mhatre (Student Id: 801045013)
+ * Shantanu Rajenimbalkar (Student Id: 800968033)
+ */
+public class ViewTasks extends Activity {
 
-public class ViewTasks extends AppCompatActivity {
-
-    public LinkedList<Task> taskList;
-    public Integer currentIndex;
-    public Task currentTask;
+    public static final String BLANK = "";
+    private LinkedList<Task> taskList;
+    private Integer currentIndex;
+    private Task currentTask;
+    private String toastMessage;
 
     public ViewTasks() {
         taskList = new LinkedList<>();
         currentIndex = 0;
         currentTask = null;
+        toastMessage = null;
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_view_tasks);
+        TextView textView = findViewById(R.id.titleHeading);
+        textView.setText(getResources().getText(R.string.view_tasks_name));
+//        getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.title_layout);
 
         if(taskList != null && taskList.size() > 0) {
             currentTask = taskList.getFirst();
@@ -37,6 +54,13 @@ public class ViewTasks extends AppCompatActivity {
         }
 
         ImageButton addButton = findViewById(R.id.add_button);
+        ImageButton editButton = findViewById(R.id.edit_button);
+        ImageButton deleteButton = findViewById(R.id.delete_button);
+        ImageButton firstTaskButton = findViewById(R.id.first_task_button);
+        ImageButton lastTaskButton = findViewById(R.id.last_task_button);
+        ImageButton previousTaskButton = findViewById(R.id.previous_task_button);
+        ImageButton nextTaskButton = findViewById(R.id.next_task_button);
+
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -47,26 +71,46 @@ public class ViewTasks extends AppCompatActivity {
             }
         });
 
-        ImageButton editButton = findViewById(R.id.edit_button);
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getBaseContext(), AddEditTask.class);
-                intent.putExtra(RequestCodes.TASK.getValue().toString(), currentTask);
-                intent.putExtra(RequestCodes.REQUEST_CODE.getValue().toString(), (Integer) RequestCodes.EDIT_CODE.getValue());
-                startActivityForResult(intent, (Integer) RequestCodes.EDIT_CODE.getValue());
+                if(currentTask != null) {
+                    Intent intent = new Intent(getBaseContext(), AddEditTask.class);
+                    intent.putExtra(RequestCodes.TASK.getValue().toString(), currentTask);
+                    intent.putExtra(RequestCodes.REQUEST_CODE.getValue().toString(), (Integer) RequestCodes.EDIT_CODE.getValue());
+                    startActivityForResult(intent, (Integer) RequestCodes.EDIT_CODE.getValue());
+                } else if(currentIndex == 0) {
+                    Toast.makeText(getBaseContext(), "No tasks available", Toast.LENGTH_SHORT).show();
+                }
             }
         });
+        final AlertDialog.Builder alert = new AlertDialog.Builder(this)
+                .setTitle("Confirm")
+                .setMessage("Do you really want to delete?")
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
 
-        ImageButton deleteButton = findViewById(R.id.delete_button);
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        delete();
+                    }
+                })
+                .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                delete();
+                if(taskList != null && taskList.size() > 0) {
+                    alert.show();
+                } else if(currentIndex == 0) {
+                    Toast.makeText(getBaseContext(), "No tasks available", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
-        ImageButton firstTaskButton = findViewById(R.id.first_task_button);
         firstTaskButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,11 +118,12 @@ public class ViewTasks extends AppCompatActivity {
                     currentTask = taskList.getFirst();
                     currentIndex = 1;
                     displayOnActivity();
+                } else if(currentIndex == 0) {
+                    Toast.makeText(getBaseContext(), "No tasks available", Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
-        ImageButton lastTaskButton = findViewById(R.id.last_task_button);
         lastTaskButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -86,11 +131,12 @@ public class ViewTasks extends AppCompatActivity {
                     currentTask = taskList.getLast();
                     currentIndex = taskList.size();
                     displayOnActivity();
+                } else if(currentIndex == 0) {
+                    Toast.makeText(getBaseContext(), "No tasks available", Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
-        ImageButton previousTaskButton = findViewById(R.id.previous_task_button);
         previousTaskButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,11 +144,14 @@ public class ViewTasks extends AppCompatActivity {
                     currentTask = taskList.get(currentIndex - 2);
                     currentIndex--;
                     displayOnActivity();
+                } else if(currentIndex == 0) {
+                    Toast.makeText(getBaseContext(), "No tasks available", Toast.LENGTH_SHORT).show();
+                } else if(currentIndex == 1) {
+                    Toast.makeText(getBaseContext(), "The current task is the first task", Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
-        ImageButton nextTaskButton = findViewById(R.id.next_task_button);
         nextTaskButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -110,6 +159,10 @@ public class ViewTasks extends AppCompatActivity {
                     currentTask = taskList.get(currentIndex);
                     currentIndex++;
                     displayOnActivity();
+                } else if(currentIndex == 0) {
+                    Toast.makeText(getBaseContext(), "No tasks available", Toast.LENGTH_SHORT).show();
+                } else if(currentIndex == taskList.size()) {
+                    Toast.makeText(getBaseContext(), "The current task is the last task", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -123,21 +176,43 @@ public class ViewTasks extends AppCompatActivity {
     }
 
     public void delete() {
-        if(currentIndex == taskList.size()) {
+        Integer size = taskList.size();
+
+        if(size <= 0) {
+            return;
+        } else if(size == 1) {
+            currentTask = null;
+        } else if(currentIndex == 1) {
+            currentTask = taskList.get(currentIndex);
+            currentIndex++;
+        } else {
+            currentTask = taskList.get(currentIndex - 2);
+        }
+
+        /*if(currentIndex == taskList.size()) {
             currentIndex--;
         }
         if(currentIndex == 1) {
             currentTask = taskList.get(currentIndex);
         } else {
             currentTask = taskList.get(currentIndex - 2);
-        }
-        taskList.remove(currentIndex - 1);
+        }*/
+        currentIndex--;
+        taskList.remove(currentIndex.intValue());
         displayOnActivity();
     }
 
     public void displayOnActivity() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yy");
-        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:MM");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+        SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm a");
+
+        /*ImageButton addButton = findViewById(R.id.add_button);
+        ImageButton editButton = findViewById(R.id.edit_button);
+        ImageButton deleteButton = findViewById(R.id.delete_button);
+        ImageButton firstTaskButton = findViewById(R.id.first_task_button);
+        ImageButton lastTaskButton = findViewById(R.id.last_task_button);
+        ImageButton previousTaskButton = findViewById(R.id.previous_task_button);
+        ImageButton nextTaskButton = findViewById(R.id.next_task_button);*/
 
         TextView titleView = findViewById(R.id.task_title);
         TextView dateTimeView = findViewById(R.id.task_date_time);
@@ -152,8 +227,11 @@ public class ViewTasks extends AppCompatActivity {
         if(currentTask != null) {
             titleView.setText(currentTask.getTitle());
             dateTimeView.setText(dateFormat.format(currentTask.getDate()) + " " + timeFormat.format(currentTask.getTime()));
-
             priorityView.setText(currentTask.getPriority().getValue());
+        } else {
+            titleView.setText(BLANK);
+            dateTimeView.setText(BLANK);
+            priorityView.setText(BLANK);
         }
 
         if(currentIndex == 0) {
@@ -161,11 +239,21 @@ public class ViewTasks extends AppCompatActivity {
         } else {
             taskStatus.setText("Task " + currentIndex + " of " + taskList.size());
         }
+
+        if(toastMessage != null && toastMessage.length() > 0) {
+            Toast.makeText(this, toastMessage, Toast.LENGTH_SHORT).show();
+            toastMessage = null;
+        }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
+        if(resultCode == ((Integer) RequestCodes.CANCEL_CODE.getValue()).intValue()) {
+            displayOnActivity();
+            return;
+        }
 
         Task task = (Task) data.getExtras().getSerializable(RequestCodes.TASK.getValue().toString());
         if(resultCode == ((Integer) RequestCodes.ADD_CODE.getValue()).intValue()) {
@@ -177,9 +265,12 @@ public class ViewTasks extends AppCompatActivity {
     }
 
     public void add(Task task) {
+        if(toastMessage == null || toastMessage.length() <1) {
+            toastMessage = getString(R.string.add_success_message);
+        }
         ListIterator<Task> iterator = taskList.listIterator();
         Task tempTask = null;
-        Integer index = 1;
+        Integer index = 0;
         while(iterator.hasNext()) {
             tempTask = iterator.next();
             if(tempTask.getDate().after(task.getDate())
@@ -188,12 +279,13 @@ public class ViewTasks extends AppCompatActivity {
             }
             index++;
         }
-        iterator.add(task);
-        currentIndex = index;
+        taskList.add(index, task);
+        currentIndex = index + 1;
         currentTask = task;
     }
 
     public void edit(Task task) {
+        toastMessage = getString(R.string.edit_success_message);
         delete();
         add(task);
     }

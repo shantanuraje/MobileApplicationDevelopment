@@ -1,11 +1,16 @@
 package mad.nil.taskmanager;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.method.KeyListener;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -18,12 +23,18 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-
-public class AddEditTask extends AppCompatActivity {
+/**
+ * Homework 1
+ * File name: AddEditTasks.java
+ * Nilanjan Mhatre (Student Id: 801045013)
+ * Shantanu Rajenimbalkar (Student Id: 800968033)
+ */
+public class AddEditTask extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_add_edit_task);
     }
 
@@ -33,27 +44,47 @@ public class AddEditTask extends AppCompatActivity {
 
         Integer requestCode = getIntent().getExtras().getInt(RequestCodes.REQUEST_CODE.getValue().toString());
 
+        Calendar myCalendar = Calendar.getInstance();
+        Calendar myCalendar1 = Calendar.getInstance();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yy");
+        SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm a");
         if(requestCode == RequestCodes.EDIT_CODE.getValue()) {
             Task task = (Task) getIntent().getSerializableExtra(RequestCodes.TASK.getValue().toString());
             populateValues(task);
+            myCalendar.setTime(task.getDate());
+            myCalendar1.setTime(task.getTime());
+            TextView textView = findViewById(R.id.titleHeading);
+            textView.setText(getResources().getText(R.string.edit_task_name));
+        } else {
+            RadioGroup radioGroup = findViewById(R.id.priority_value);
+            ((RadioButton) radioGroup.getChildAt(0)).setChecked(true);
+            TextView textView = findViewById(R.id.titleHeading);
+            textView.setText(getResources().getText(R.string.add_task_name));
         }
 
-        Button button = findViewById(R.id.save_button);
-        button.setOnClickListener(new View.OnClickListener() {
+        Button addButton = findViewById(R.id.save_button);
+        addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 save();
             }
         });
+        Button cancelButton = findViewById(R.id.cancel_button);
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cancel();
+            }
+        });
 
-        final TextView dateView = findViewById(R.id.date_value);
-        final TextView timeView = findViewById(R.id.time_value);
-        SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yy");
-        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:MM");
-        Calendar myCalendar = Calendar.getInstance();
+        final EditText dateView = findViewById(R.id.date_value);
+        final EditText timeView = findViewById(R.id.time_value);
+        dateView.setKeyListener(null);
+        timeView.setKeyListener(null);
         final DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                month++;
                 String monthString = month<10 ? "0"+month : ""+month;
                 String dayString = dayOfMonth<10 ? "0"+dayOfMonth : ""+dayOfMonth;
                 String date = monthString + "/" +dayString+"/"+year;
@@ -62,6 +93,7 @@ public class AddEditTask extends AppCompatActivity {
         }, myCalendar
                 .get(Calendar.YEAR), myCalendar.get(Calendar.MONTH),
                 myCalendar.get(Calendar.DAY_OF_MONTH));
+        datePickerDialog.getDatePicker().setMinDate(Calendar.getInstance().getTimeInMillis());
 
         final TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
             @Override
@@ -77,7 +109,7 @@ public class AddEditTask extends AppCompatActivity {
 
                 timeView.setText(time);
             }
-        }, 0, 0, false);
+        }, myCalendar1.getTime().getHours(), myCalendar1.getTime().getMinutes(), false);
 
         dateView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,7 +127,7 @@ public class AddEditTask extends AppCompatActivity {
 
     public void populateValues(Task task) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yy");
-        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:MM");
+        SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm a");
 
         EditText titleView = findViewById(R.id.title_value);
         EditText dateView = findViewById(R.id.date_value);
@@ -117,7 +149,7 @@ public class AddEditTask extends AppCompatActivity {
 
     public void save() {
         SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yy");
-        SimpleDateFormat timeFormat = new SimpleDateFormat("HH:MM");
+        SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm a");
 
         EditText titleView = findViewById(R.id.title_value);
         EditText dateView = findViewById(R.id.date_value);
@@ -142,6 +174,7 @@ public class AddEditTask extends AppCompatActivity {
 
         if(title == null || title.length() == 0) {
             titleView.setError(getResources().getString(R.string.title_error));
+            failed = true;
         }
         try {
             date = dateFormat.parse(dateValue);
@@ -173,6 +206,12 @@ public class AddEditTask extends AppCompatActivity {
         intent.putExtra(RequestCodes.REQUEST_CODE.getValue().toString(), requestCode);
         intent.putExtra(RequestCodes.INDEX.getValue().toString(), index);
         setResult(new Integer(requestCode), intent);
+        finish();
+    }
+
+    public void cancel() {
+        Intent intent = new Intent();
+        setResult(new Integer(RequestCodes.CANCEL_CODE.getValue().toString()), intent);
         finish();
     }
 }
