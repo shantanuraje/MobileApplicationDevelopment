@@ -41,4 +41,7 @@ public class Generator {
         return randomInt;
     }
 
+    public static void main(String args[]) {
+        System.out.print(getPassword(10));
+    }
 }
