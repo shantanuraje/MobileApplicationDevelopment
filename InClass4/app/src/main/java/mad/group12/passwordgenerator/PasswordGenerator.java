@@ -1,5 +1,6 @@
 package mad.group12.passwordgenerator;
 
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -59,5 +60,27 @@ public class PasswordGenerator extends AppCompatActivity {
             }
         });
         ll_lenPass.addView(tv_lenOfPasses);
+    }
+
+    private class BackgroundGenerator extends AsyncTask {
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected Object doInBackground(Object[] objects) {
+            return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(Object[] values) {
+            super.onProgressUpdate(values);
+        }
+
+        @Override
+        protected void onPostExecute(Object o) {
+            super.onPostExecute(o);
+        }
     }
 }
