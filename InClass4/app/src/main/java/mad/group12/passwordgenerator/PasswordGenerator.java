@@ -14,15 +14,15 @@ public class PasswordGenerator extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_password_generator);
-        LinearLayout ll_numOfPassCount = (LinearLayout) findViewById(R.id.ll_numOfPassCount);
+        final LinearLayout ll_numOfPassCount = (LinearLayout) findViewById(R.id.ll_numOfPassCount);
         final SeekBar sb_numOfPassCount = (SeekBar) findViewById(R.id.sb_lenPass);
-        final TextView tv_numOfPasses = new TextView(this);
+        final TextView tv_numOfPasses = findViewById(R.id.tv_numOfPasses);
 
         sb_numOfPassCount.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean b) {
                 tv_numOfPasses.setText(String.valueOf(progress));
-                Log.d("PassGen", String.valueOf(progress));
+                Log.d("PassGen1", String.valueOf(progress));
             }
 
             @Override
@@ -36,17 +36,16 @@ public class PasswordGenerator extends AppCompatActivity {
             }
 
         });
-        ll_numOfPassCount.addView(tv_numOfPasses);
 
-        LinearLayout ll_lenPass = (LinearLayout) findViewById(R.id.ll_lenPass);
-        SeekBar sb_lenPass = (SeekBar)findViewById(R.id.sb_lenPass);
-        final TextView tv_lenOfPasses = new TextView(this);
+        final LinearLayout ll_lenPass = (LinearLayout) findViewById(R.id.ll_lenPass);
+        final SeekBar sb_lenPass = (SeekBar)findViewById(R.id.sb_lenPass);
+        final TextView tv_lenOfPasses = findViewById(R.id.tv_lenOfPasses);
 
         sb_lenPass.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean b) {
                 tv_lenOfPasses.setText(String.valueOf(progress));
-                Log.d("PassGen", String.valueOf(progress));
+                Log.d("PassGen2", String.valueOf(progress));
             }
 
             @Override
@@ -59,7 +58,6 @@ public class PasswordGenerator extends AppCompatActivity {
 
             }
         });
-        ll_lenPass.addView(tv_lenOfPasses);
     }
 
     private class BackgroundGenerator extends AsyncTask {
