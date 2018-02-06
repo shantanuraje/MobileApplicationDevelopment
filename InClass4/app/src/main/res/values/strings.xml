@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">PasswordGenerator</string>
     <string name="tv_numOfPassText">Select Passwords count:</string>
+    <string name="tv_lenOfPassText">Slect Passwords length:</string>
+    <string name="tv_passwordText">Password:</string>
+    <string name="btn_gen_threads">Generate Passwords (Thread)</string>
+    <string name="btn_gen_async">Generate Passwords (Async Task)</string>
 </resources>
