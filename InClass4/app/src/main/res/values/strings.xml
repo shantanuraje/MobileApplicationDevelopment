@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">PasswordGenerator</string>
+    <string name="tv_numOfPassText">Select Passwords count:</string>
 </resources>
