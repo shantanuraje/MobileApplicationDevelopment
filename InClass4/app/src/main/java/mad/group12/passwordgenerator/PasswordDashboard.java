@@ -1,3 +1,9 @@
+/**
+ * Inclass Assignment 4
+ * File name: PasswordDashboard.java - launcher screen activity
+ * Nilanjan Mhatre (Student Id: 801045013)
+ * Shantanu Rajenimbalkar (Student Id: 800968033)
+ */
 package mad.group12.passwordgenerator;
 
 import android.app.Activity;
@@ -16,13 +22,13 @@ public class PasswordDashboard extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.activity_password_dashboard);
+        setContentView(R.layout.activity_password_dashboard); //set layout to launcher screen layout file
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-
+        //set delay of 3 sec before launching PasswordGenerator activity
         handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override

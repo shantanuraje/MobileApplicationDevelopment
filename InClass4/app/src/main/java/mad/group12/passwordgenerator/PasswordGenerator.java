@@ -1,3 +1,10 @@
+/**
+ * Inclass Assignment 4
+ * File name: PasswordGenerator.java
+ * Nilanjan Mhatre (Student Id: 801045013)
+ * Shantanu Rajenimbalkar (Student Id: 800968033)
+ */
+
 package mad.group12.passwordgenerator;
 
 import android.app.AlertDialog;
@@ -28,17 +35,17 @@ import java.util.concurrent.Executors;
 
 public class PasswordGenerator extends AppCompatActivity {
 
-    public static final int MAX_POOL_COUNT = 2;
-    public static final int MIN_PASSWORD_COUNT = 1;
-    public static final int MAX_PASSWORD_COUNT = 10;
-    public static final int MIN_PASSWORD_LENGTH = 8;
-    public static final int MAX_PASSWORD_LENGTH = 23;
+    public static final int MAX_POOL_COUNT = 2; //max number of thread pools
+    public static final int MIN_PASSWORD_COUNT = 1; //min number of passwords that can be generated
+    public static final int MAX_PASSWORD_COUNT = 10; //max number of passwords that can be generated
+    public static final int MIN_PASSWORD_LENGTH = 8; //min length of passwords that can be generated
+    public static final int MAX_PASSWORD_LENGTH = 23; //min length of passwords that can be generated
 
-    Handler handler;
+    Handler handler; //handler to manage messages sent by Runnable or AsyncTask
 
-    LinkedList<String> passwordList;
+    LinkedList<String> passwordList; // list to store generated passwords
 
-    ProgressDialog progressDialog;
+    ProgressDialog progressDialog; // dialog to display progress
 
 
     @Override
@@ -55,6 +62,7 @@ public class PasswordGenerator extends AppCompatActivity {
 
 
         SeekBar sb_numOfPassCount = findViewById(R.id.sb_numOfPassCount);
+        //display seekbar password count on textview
         sb_numOfPassCount.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean b) {
@@ -75,6 +83,7 @@ public class PasswordGenerator extends AppCompatActivity {
         final SeekBar sb_lenPass = findViewById(R.id.sb_lenPass);
         final TextView tv_lenOfPasses = findViewById(R.id.tv_lenOfPasses);
 
+        //display seekbar password length on textview
         sb_lenPass.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean b) {
@@ -93,6 +102,7 @@ public class PasswordGenerator extends AppCompatActivity {
         });
 
         Button threadButton = findViewById(R.id.btn_gen_threads);
+        // onclick listener for generating passwords using threads
         threadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -101,6 +111,7 @@ public class PasswordGenerator extends AppCompatActivity {
         });
 
         Button asyncButton = findViewById(R.id.btn_gen_async);
+        // onclick listener for generating passwords using async task
         asyncButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -109,6 +120,7 @@ public class PasswordGenerator extends AppCompatActivity {
         });
 
         passwordList = new LinkedList<>();
+        //handler to receive messages and display progress dialog
         handler = new Handler(new Handler.Callback() {
             @Override
             public boolean handleMessage(Message msg) {
@@ -130,7 +142,7 @@ public class PasswordGenerator extends AppCompatActivity {
     }
 
 
-
+    // function to generate passwords using threads
     public void generatePasswordByThreads() {
         SeekBar sbPasswordCount = findViewById(R.id.sb_numOfPassCount);
         SeekBar sbLengthOfPassword = findViewById(R.id.sb_lenPass);
@@ -143,10 +155,11 @@ public class PasswordGenerator extends AppCompatActivity {
 
         ExecutorService executor = Executors.newFixedThreadPool(MAX_POOL_COUNT);
         for(int i=0; i<passwordCount; i++) {
-            executor.execute(new ThreadGenerator(passwordLength));
+            executor.execute(new ThreadGenerator(passwordLength)); //executing new thread to generate a password
         }
     }
 
+    // function to generate passwords using async
     public void generatePasswordByAsync() {
         SeekBar sbPasswordCount = findViewById(R.id.sb_numOfPassCount);
         SeekBar sbLengthOfPassword = findViewById(R.id.sb_lenPass);
@@ -157,9 +170,10 @@ public class PasswordGenerator extends AppCompatActivity {
         progressDialog.setProgress(0);
         progressDialog.setMax(passwordCount);
         progressDialog.show();
-        new BackgroundGenerator().execute(passwordCount, passwordLength);
+        new BackgroundGenerator().execute(passwordCount, passwordLength); //executing a background task to generate a password
     }
 
+    //dialog to display generated passwords
     public void showPasswordDialog(String[] result) {
         final String[] options = result;
 
@@ -174,6 +188,7 @@ public class PasswordGenerator extends AppCompatActivity {
         builder.create().show();
     }
 
+    // background generator to generate passwords using async task
     private class BackgroundGenerator extends AsyncTask<Integer, Integer, String[]> {
 
         @Override
@@ -209,6 +224,7 @@ public class PasswordGenerator extends AppCompatActivity {
         }
     }
 
+    // thread generator class implementing runnable
     class ThreadGenerator implements Runnable {
         private Integer length;
 
