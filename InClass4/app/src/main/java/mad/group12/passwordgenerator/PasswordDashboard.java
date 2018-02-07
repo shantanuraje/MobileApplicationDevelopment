@@ -38,4 +38,8 @@ public class PasswordDashboard extends Activity {
             }
         }, 3000);
     }
+
+    @Override
+    public void onBackPressed() {
+    }
 }

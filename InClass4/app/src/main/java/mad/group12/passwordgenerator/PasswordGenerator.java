@@ -11,6 +11,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
@@ -123,8 +124,8 @@ public class PasswordGenerator extends AppCompatActivity {
                 SeekBar sbPasswordLength = findViewById(R.id.sb_lenPass);
                 Integer passwordLength = sbPasswordLength.getProgress() + MIN_PASSWORD_LENGTH;
 
-                passwordList.add(msg.getData().get("password").toString());
-                progressDialog.setProgress(passwordList.size());
+                passwordList.add(msg.getData().get(getString(R.string.password)).toString());
+                progressDialog.incrementProgressBy(1);
                 if(passwordList.size() == passwordCount.intValue()) {
                     progressDialog.dismiss();
                     showPasswordDialog(passwordList.toArray(new String[passwordList.size()]));
@@ -177,7 +178,7 @@ public class PasswordGenerator extends AppCompatActivity {
     public void showPasswordDialog(String[] result) {
         final String[] options = result;
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(PasswordGenerator.this)
+        AlertDialog.Builder builder = new AlertDialog.Builder(PasswordGenerator.this).setTitle("Passwords")
                 .setItems(options, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -205,7 +206,7 @@ public class PasswordGenerator extends AppCompatActivity {
 
             for(int i=0; i<passwordCount; i++) {
                 result[i] = Generator.getPassword(passwordLength);
-                publishProgress(i);
+                publishProgress(1);
             }
             return result;
         }
@@ -213,7 +214,7 @@ public class PasswordGenerator extends AppCompatActivity {
         @Override
         protected void onProgressUpdate(Integer... values) {
             super.onProgressUpdate(values);
-            progressDialog.setProgress(values[0]);
+            progressDialog.incrementProgressBy(values[0]);
         }
 
         @Override
@@ -237,10 +238,20 @@ public class PasswordGenerator extends AppCompatActivity {
             String password = Generator.getPassword(length);
             Message message = new Message();
             Bundle bundle = new Bundle();
-            bundle.putString("password", password);
+            bundle.putString(getString(R.string.password), password);
             message.setData(bundle);
 
             handler.sendMessage(message);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent quit = new Intent(Intent.ACTION_MAIN);
+        quit.addCategory(Intent.CATEGORY_HOME);
+        quit.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(quit);
+        finish();
     }
 }

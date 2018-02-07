@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">PasswordGenerator</string>
+    <string name="app_name">Password Generator</string>
     <string name="tv_numOfPassText">Select Passwords count:</string>
     <string name="tv_lenOfPassText">Select Passwords length:</string>
     <string name="tv_passwordText">Password:</string>
@@ -7,4 +7,5 @@
     <string name="btn_gen_async">Generate Passwords (Async Task)</string>
     <string name="ok_button">Ok</string>
     <string name="cancel_button">Cancel</string>
+    <string name="password">password</string>
 </resources>
