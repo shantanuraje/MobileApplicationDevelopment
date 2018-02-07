@@ -55,12 +55,6 @@ public class PasswordGenerator extends AppCompatActivity {
         LinearLayout ll_numOfPassCount = (LinearLayout) findViewById(R.id.ll_numOfPassCount);
         final TextView tv_numOfPasses = findViewById(R.id.tv_numOfPasses);
 
-
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-        progressDialog.setCancelable(false);
-
-
         SeekBar sb_numOfPassCount = findViewById(R.id.sb_numOfPassCount);
         //display seekbar password count on textview
         sb_numOfPassCount.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -149,6 +143,9 @@ public class PasswordGenerator extends AppCompatActivity {
 
         Integer passwordCount = sbPasswordCount.getProgress() + MIN_PASSWORD_COUNT;
         Integer passwordLength = sbLengthOfPassword.getProgress() + MIN_PASSWORD_LENGTH;
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        progressDialog.setCancelable(false);
         progressDialog.setProgress(0);
         progressDialog.setMax(passwordCount);
         progressDialog.show();
@@ -167,6 +164,9 @@ public class PasswordGenerator extends AppCompatActivity {
         Integer passwordCount = sbPasswordCount.getProgress() + MIN_PASSWORD_COUNT;
         Integer passwordLength = sbLengthOfPassword.getProgress() + MIN_PASSWORD_LENGTH;
 
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        progressDialog.setCancelable(false);
         progressDialog.setProgress(0);
         progressDialog.setMax(passwordCount);
         progressDialog.show();
@@ -207,7 +207,6 @@ public class PasswordGenerator extends AppCompatActivity {
                 result[i] = Generator.getPassword(passwordLength);
                 publishProgress(i);
             }
-            progressDialog.dismiss();
             return result;
         }
 
@@ -220,6 +219,7 @@ public class PasswordGenerator extends AppCompatActivity {
         @Override
         protected void onPostExecute(String[] result) {
             super.onPostExecute(result);
+            progressDialog.dismiss();
             showPasswordDialog(result);
         }
     }
