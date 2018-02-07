@@ -33,7 +33,7 @@ public class Generator {
     private static int getRandomIndex(int len){
         Random rand = new Random();
         int randomInt = 0;
-        for(int i=0; i<10000; i++){
+        for(int i=0; i<1000; i++){
             for(int j=0; j<1000;j++){
                 randomInt = rand.nextInt(len);
             }

@@ -155,6 +155,7 @@ public class PasswordGenerator extends AppCompatActivity {
         Integer passwordLength = sbLengthOfPassword.getProgress() + MIN_PASSWORD_LENGTH;
 
         progressDialog.setProgress(0);
+        progressDialog.setMax(passwordCount);
         progressDialog.show();
         new BackgroundGenerator().execute(passwordCount, passwordLength);
     }
@@ -186,7 +187,6 @@ public class PasswordGenerator extends AppCompatActivity {
             Integer passwordLength = length[1];
 
             String[] result = new String[passwordCount];
-            progressDialog.setMax(passwordCount);
 
             for(int i=0; i<passwordCount; i++) {
                 result[i] = Generator.getPassword(passwordLength);
