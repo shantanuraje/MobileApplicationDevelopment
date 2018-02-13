@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Photo Gallery</string>
+    <string name="search_keyword">Search Keyword</string>
+    <string name="go">Go</string>
+</resources>
