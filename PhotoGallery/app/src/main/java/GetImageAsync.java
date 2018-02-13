@@ -54,7 +54,7 @@ public class GetImageAsync extends AsyncTask<String, String, Bitmap> {
         super.onPostExecute(bitmap);
     }
 
-    public interface ImageData {
+    public static interface ImageData {
         void postResult(Bitmap bitmap);
     }
 }

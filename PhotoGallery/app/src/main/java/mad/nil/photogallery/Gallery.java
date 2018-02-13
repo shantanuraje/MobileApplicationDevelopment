@@ -43,7 +43,7 @@ public class Gallery extends AppCompatActivity implements GetImageAsync.ImageDat
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gallery);
-        progressBar = new ProgressBar(this);
+        progressBar = new ProgressBar(Gallery.this);
         progressBar.setVisibility(View.INVISIBLE);
     }
 
