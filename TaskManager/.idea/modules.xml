@@ -3,7 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/TaskManager.iml" filepath="$PROJECT_DIR$/TaskManager.iml" />
+      <module fileurl="file://C:\Users\shant\AndroidStudioProjects\MobileApplicationDevelopment\TaskManager\TaskManager.iml" filepath="C:\Users\shant\AndroidStudioProjects\MobileApplicationDevelopment\TaskManager\TaskManager.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://C:\Users\shant\AndroidStudioProjects\MobileApplicationDevelopment\TaskManager\app\app.iml" filepath="C:\Users\shant\AndroidStudioProjects\MobileApplicationDevelopment\TaskManager\app\app.iml" />
     </modules>
   </component>
 </project>

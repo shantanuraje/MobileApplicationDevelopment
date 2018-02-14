@@ -45,22 +45,26 @@
 
         <ImageButton
             android:id="@+id/previous_button"
-            android:layout_height="match_parent"
             android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_weight="0.3"
+            android:background="@android:color/background_light"
+            android:cropToPadding="false"
             android:src="@drawable/prev" />
 
         <ImageButton
             android:id="@+id/previous_button2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="0.4" />
+            android:layout_weight="0.4"
+            android:background="@android:color/background_light" />
 
         <ImageButton
             android:id="@+id/next_button"
-            android:layout_height="match_parent"
             android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:layout_weight="0.3"
+            android:background="@android:color/background_light"
             android:src="@drawable/next" />
     </LinearLayout>
 
