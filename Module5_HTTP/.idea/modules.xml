@@ -3,7 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Module5_HTTP.iml" filepath="$PROJECT_DIR$/Module5_HTTP.iml" />
+      <module fileurl="file://C:\Users\shant\AndroidStudioProjects\MobileApplicationDevelopment\Module5_HTTP\Module5_HTTP.iml" filepath="C:\Users\shant\AndroidStudioProjects\MobileApplicationDevelopment\Module5_HTTP\Module5_HTTP.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://C:\Users\shant\AndroidStudioProjects\MobileApplicationDevelopment\Module5_HTTP\app\app.iml" filepath="C:\Users\shant\AndroidStudioProjects\MobileApplicationDevelopment\Module5_HTTP\app\app.iml" />
     </modules>
   </component>
 </project>

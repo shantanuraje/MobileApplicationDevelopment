@@ -93,7 +93,7 @@ public class Gallery extends AppCompatActivity implements  GetImageAsync.ImageDa
                                     new GetImageURLsAsync().execute(IMAGES_URL, keyword);
                                 }
                             }).create().show();
-                } else {
+                } else if (!isConnected()){
                     //if no internet connection display "no connection toast"
                     Toast.makeText(Gallery.this, "Not connected", Toast.LENGTH_LONG);
                 }
@@ -131,14 +131,13 @@ public class Gallery extends AppCompatActivity implements  GetImageAsync.ImageDa
         });
     }
 
-    // function to check internet connectivity
-    public boolean isConnected() {
+    //method to check if device is connected to internet
+    private boolean isConnected(){
         ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-        if (networkInfo != null && networkInfo.isConnected()) {
-            return true;
-        }
-        return false;
+        if (networkInfo == null || !networkInfo.isConnected() || (networkInfo.getType() != ConnectivityManager.TYPE_WIFI && networkInfo.getType() != ConnectivityManager.TYPE_MOBILE))
+            return false;
+        return true;
     }
 
     //override method that receives image from async task and sets imageView to display that image
