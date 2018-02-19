@@ -1,4 +1,4 @@
-package mad.nil.tipcalculator;
+	package mad.nil.tipcalculator;
 
 import android.app.Activity;
 import android.content.res.Resources;

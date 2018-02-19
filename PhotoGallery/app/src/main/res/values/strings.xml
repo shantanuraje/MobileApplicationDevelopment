@@ -2,4 +2,13 @@
     <string name="app_name">Photo Gallery</string>
     <string name="search_keyword">Search Keyword</string>
     <string name="go">Go</string>
+    <string name="no_keyword_error">No Keywords available. Trying to retrieve keywords. Please check whether you are connected to the Internet</string>
+    <string name="no_images">No Images Found</string>
+    <string name="already_loaded">Images already loaded</string>
+    <string name="dictionary_dialog_title">Choose a dictionary</string>
+    <string name="loading_dictionary_message">Loading Dictionary</string>
+    <string name="loading_photo_message">Loading Photo</string>
+    <string name="default_loading_message">Loading</string>
+    <string name="loading_keywords_message">Loading Keywords</string>
+    <string name="no_internet">No Internet Connection</string>
 </resources>
