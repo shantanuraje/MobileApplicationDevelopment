@@ -5,13 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="mad.nil.news.NewsActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:weightSum="100">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="5dp"
-        android:layout_margin="10dp">
+        android:layout_margin="10dp"
+        android:padding="5dp">
 
         <TextView
             android:id="@+id/text_keyword"
@@ -30,8 +31,32 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="0.2">
+        android:layout_height="0dp"
+        android:layout_weight="10">
+
+        <TextView
+            android:id="@+id/news_title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@android:drawable/ic_menu_rotate" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="10">
+
+        <TextView
+            android:id="@+id/news_date"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@android:drawable/ic_menu_rotate" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="40">
 
         <ImageView
             android:id="@+id/current_image"
@@ -42,10 +67,22 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="0.4">
+        android:layout_height="0dp"
+        android:layout_weight="30">
 
-        <ImageButton
+        <TextView
+            android:id="@+id/news_description"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@android:drawable/ic_menu_rotate" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="10">
+
+        <ImageView
             android:id="@+id/previous_button"
             android:layout_height="match_parent"
             android:layout_width="match_parent"
@@ -59,7 +96,7 @@
             android:layout_height="match_parent"
             android:layout_weight="0.4" />
 
-        <ImageButton
+        <ImageView
             android:id="@+id/next_button"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

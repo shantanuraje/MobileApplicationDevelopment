@@ -8,6 +8,7 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -32,7 +33,8 @@ public class NewsActivity extends AppCompatActivity implements NewsFunctions {
     public static final String API_KEY = "5dbfb20add3346c3ad007e38d5427d8e";
 //    public static final String IMAGES_URL = "http://dev.theappsdr.com/apis/photos/index.php";
 //    public static final String RANDOM = "random";
-    private List<String> imageUrlList;
+
+    private List<News> headlines;
     private ArrayList<String> categoryList;
     private String currentKeyword;
     private int currentIndex;
@@ -94,8 +96,8 @@ public class NewsActivity extends AppCompatActivity implements NewsFunctions {
             }
         });
 
-        ImageButton next = findViewById(R.id.next_button);
-        ImageButton previous = findViewById(R.id.previous_button);
+        ImageView next = findViewById(R.id.next_button);
+        ImageView previous = findViewById(R.id.previous_button);
 
         next.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -140,11 +142,11 @@ public class NewsActivity extends AppCompatActivity implements NewsFunctions {
                                 } else {
                                     Toast.makeText(NewsActivity.this, R.string.no_internet, Toast.LENGTH_SHORT).show();
                                     currentIndex = -1;
-                                    loadCurrentImage();
+                                    loadCurrentNews();
                                     dismissDialog();
                                 }
                             } else {
-                                if(imageUrlList.size() > 0) {
+                                if(headlines.size() > 0) {
                                     Toast.makeText(NewsActivity.this, R.string.already_loaded, Toast.LENGTH_SHORT).show();
                                 } else {
                                     Toast.makeText(NewsActivity.this, R.string.no_images, Toast.LENGTH_SHORT).show();
@@ -162,13 +164,13 @@ public class NewsActivity extends AppCompatActivity implements NewsFunctions {
     }
 
     public void previousImage() {
-        if(imageUrlList != null && imageUrlList.size() > 0 && currentIndex >= 0) {
+        if(headlines != null && headlines.size() > 0 && currentIndex >= 0) {
             if (currentIndex == 0) {
-                currentIndex = imageUrlList.size() - 1;
+                currentIndex = headlines.size() - 1;
             } else {
                 currentIndex--;
             }
-            loadCurrentImage();
+            loadCurrentNews();
         } else {
             Toast.makeText(NewsActivity.this, R.string.no_images, Toast.LENGTH_LONG).show();
         }
@@ -176,8 +178,8 @@ public class NewsActivity extends AppCompatActivity implements NewsFunctions {
 
     public void disableButtons() {
 
-        ImageButton nextButton = findViewById(R.id.next_button);
-        ImageButton previousButton = findViewById(R.id.previous_button);
+        ImageView nextButton = findViewById(R.id.next_button);
+        ImageView previousButton = findViewById(R.id.previous_button);
         nextButton.setClickable(false);
         nextButton.setEnabled(false);
         previousButton.setClickable(false);
@@ -186,47 +188,45 @@ public class NewsActivity extends AppCompatActivity implements NewsFunctions {
 
     public void enableButtons() {
 
-        ImageButton nextButton = findViewById(R.id.next_button);
-        ImageButton previousButton = findViewById(R.id.previous_button);
+        ImageView nextButton = findViewById(R.id.next_button);
+        ImageView previousButton = findViewById(R.id.previous_button);
         nextButton.setClickable(true);
         nextButton.setEnabled(true);
         previousButton.setClickable(true);
         previousButton.setEnabled(true);
     }
 
-    private void loadCurrentImage() {
+    private void loadCurrentNews() {
         showDialog(getString(R.string.loading_photo_message));
         if(currentIndex >= 0) {
-            getImageFromURL(imageUrlList.get(currentIndex));
+            getImageFromURL(headlines.get(currentIndex).getImageUrl());
         } else {
             displayImage(null);
         }
     }
 
     public void nextImage() {
-        if(imageUrlList != null && imageUrlList.size() > 0 && currentIndex >= 0) {
-            if (currentIndex == imageUrlList.size() - 1) {
+        if(headlines != null && headlines.size() > 0 && currentIndex >= 0) {
+            if (currentIndex == headlines.size() - 1) {
                 currentIndex = 0;
             } else {
                 currentIndex++;
             }
-            loadCurrentImage();
+            loadCurrentNews();
         } else {
             Toast.makeText(NewsActivity.this, R.string.no_images, Toast.LENGTH_LONG).show();
         }
     }
 
-    @Override
-    public void loadKeywords(List<String> keywordsList) {
-        this.categoryList = new ArrayList<>(keywordsList);
+    public void loadKeywords(List<String> categoryList) {
+        this.categoryList = new ArrayList<>(categoryList);
     }
 
-    @Override
-    public void loadImageURLList(List<String> imageURLList) {
-        this.imageUrlList = imageURLList;
-        if(imageURLList.size() > 0) {
+    public void loadImageURLList(List<News> headlines) {
+        this.headlines = headlines;
+        if(headlines.size() > 0) {
             currentIndex = 0;
-            if(imageURLList.size() > 1) {
+            if(headlines.size() > 1) {
                 enableButtons();
             } else {
                 disableButtons();
@@ -236,10 +236,9 @@ public class NewsActivity extends AppCompatActivity implements NewsFunctions {
             currentIndex = -1;
             disableButtons();
         }
-        loadCurrentImage();
+        loadCurrentNews();
     }
 
-    @Override
     public void getImageFromURL(String url) {
         if(isConnected()) {
             new GetImageAsync(this).execute(url);
@@ -249,23 +248,30 @@ public class NewsActivity extends AppCompatActivity implements NewsFunctions {
         }
     }
 
-    @Override
     public void displayImage(Bitmap bitmap) {
         ImageView imageView = findViewById(R.id.current_image);
         imageView.setImageBitmap(bitmap);
     }
 
-    @Override
+    public void displayCurrentNews() {
+        News news = headlines.get(currentIndex);
+
+    }
+
     public void dismissDialog() {
         dialog.dismiss();
     }
 
-    @Override
     public void showDialog(String message) {
         if(message == null || message.equals("")) {
             message = getString(R.string.default_loading_message);
         }
         dialogTextView.setText(message);
         dialog.show();
+    }
+
+    public void handleMessage(Message message) {
+        Bundle bundle = message.getData();
+        headlines = (List<News>) bundle.getSerializable("headlines");
     }
 }

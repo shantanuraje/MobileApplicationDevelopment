@@ -70,7 +70,6 @@ public class GetHeadlinesAsync extends AsyncTask<String, String, List<String>> {
     @Override
     protected void onPostExecute(List<String> strings) {
         super.onPostExecute(strings);
-        newsFunctions.loadImageURLList(strings);
         newsFunctions.dismissDialog();
     }
 }
