@@ -8,6 +8,7 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -25,13 +26,17 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class NewsActivity extends AppCompatActivity implements NewsFunctions {
 
     public static final String NEWS_URL = "https://newsapi.org/v2/top-headlines";
     public static final String NEWS_COUNTRY = "us";
     public static final String API_KEY = "5dbfb20add3346c3ad007e38d5427d8e";
-//    public static final String IMAGES_URL = "http://dev.theappsdr.com/apis/photos/index.php";
+    public static final int MAX_POOL_COUNT = 2; //max number of thread pools
+    //    public static final String IMAGES_URL = "http://dev.theappsdr.com/apis/photos/index.php";
 //    public static final String RANDOM = "random";
 
     private List<News> headlines;
@@ -222,6 +227,19 @@ public class NewsActivity extends AppCompatActivity implements NewsFunctions {
         this.categoryList = new ArrayList<>(categoryList);
     }
 
+    public void loadHeadlinesDetails(String jsonString) {
+        Handler handler = new Handler(new Handler.Callback() {
+            @Override
+            public boolean handleMessage(Message msg) {
+                NewsActivity.this.handleMessage(msg);
+                return true;
+            }
+        });
+
+        ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(MAX_POOL_COUNT);
+        scheduler.schedule(new NewsParser(handler, jsonString), 2, TimeUnit.SECONDS);
+    }
+
     public void loadHeadlines(List<News> headlines) {
         this.headlines = headlines;
         if(headlines.size() > 0) {
@@ -236,6 +254,7 @@ public class NewsActivity extends AppCompatActivity implements NewsFunctions {
             currentIndex = -1;
             disableButtons();
         }
+        dismissDialog();
         loadCurrentNews();
     }
 
@@ -273,5 +292,6 @@ public class NewsActivity extends AppCompatActivity implements NewsFunctions {
     public void handleMessage(Message message) {
         Bundle bundle = message.getData();
         headlines = (List<News>) bundle.getSerializable("headlines");
+        loadHeadlines(headlines);
     }
 }
