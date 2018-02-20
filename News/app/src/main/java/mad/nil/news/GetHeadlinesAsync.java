@@ -34,7 +34,7 @@ public class GetHeadlinesAsync extends AsyncTask<String, String, List<String>> {
 
         try {
             StringBuilder urlBuilder = new StringBuilder(params[0]);
-            urlBuilder.append("?keyword=" + params[1]);
+            urlBuilder.append("?country=" + params[1] + "&category=" + params[2] + "&apiKey=" + params[3]);
             URL url = new URL(urlBuilder.toString());
             connection = (HttpURLConnection) url.openConnection();
             connection.connect();

@@ -11,4 +11,14 @@
     <string name="default_loading_message">Loading</string>
     <string name="loading_keywords_message">Loading Keywords</string>
     <string name="no_internet">No Internet Connection</string>
+
+    <string-array name="news_categories">
+        <item>business</item>
+        <item>entertainment</item>
+        <item>general</item>
+        <item>health</item>
+        <item>science</item>
+        <item>sports</item>
+        <item>technology</item>
+    </string-array>
 </resources>

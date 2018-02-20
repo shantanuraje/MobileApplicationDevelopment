@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -27,8 +28,10 @@ import java.util.Random;
 public class NewsActivity extends AppCompatActivity implements NewsFunctions {
 
     public static final String NEWS_URL = "https://newsapi.org/docs/endpoints/top-headlines";
-    public static final String IMAGES_URL = "http://dev.theappsdr.com/apis/photos/index.php";
-    public static final String RANDOM = "random";
+    public static final String NEWS_COUNTRY = "us";
+    public static final String API_KEY = "5dbfb20add3346c3ad007e38d5427d8e";
+//    public static final String IMAGES_URL = "http://dev.theappsdr.com/apis/photos/index.php";
+//    public static final String RANDOM = "random";
     private List<String> imageUrlList;
     private ArrayList<String> categoryList;
     private String currentKeyword;
@@ -66,9 +69,20 @@ public class NewsActivity extends AppCompatActivity implements NewsFunctions {
         currentIndex = -1;
         currentKeyword = "";
 
+        Resources res = getResources();
+//        String[] planets = res.getStringArray(R.array.planets_array);
+
         if(isConnected()) {
-            categoryList = new ArrayList<>();
+            categoryList = new ArrayList<String>();
             categoryList.add("business");
+            categoryList.add("entertainment");
+            categoryList.add("general");
+            categoryList.add("health");
+            categoryList.add("science");
+            categoryList.add("sports");
+            categoryList.add("technology");
+            //{"business", "entertainment", "general", "health", "science", "sports", "technology"};
+
         }
 
         Button go = findViewById(R.id.go_button);
@@ -114,15 +128,15 @@ public class NewsActivity extends AppCompatActivity implements NewsFunctions {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             String keyword = categoryList.get(i);
-                            if(keyword.equals(RANDOM)) {
-                                ArrayList<String> list = new ArrayList<>(categoryList);
-                                list.remove(currentKeyword);
-                                keyword = list.get(new Random().nextInt(list.size() - 1));
-                            }
+//                            if(keyword.equals(RANDOM)) {
+//                                ArrayList<String> list = new ArrayList<>(categoryList);
+//                                list.remove(currentKeyword);
+//                                keyword = list.get(new Random().nextInt(list.size() - 1));
+//                            }
                             if(!currentKeyword.equals(keyword)) {
                                 if(isConnected()) {
                                     showDialog(getString(R.string.loading_news_message));
-                                    new GetHeadlinesAsync(NewsActivity.this).execute(NEWS_URL, keyword);
+                                    new GetHeadlinesAsync(NewsActivity.this).execute(NEWS_URL,NEWS_COUNTRY, keyword, API_KEY);
                                 } else {
                                     Toast.makeText(NewsActivity.this, R.string.no_internet, Toast.LENGTH_SHORT).show();
                                     currentIndex = -1;
