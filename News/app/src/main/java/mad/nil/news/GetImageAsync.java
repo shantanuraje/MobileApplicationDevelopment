@@ -55,7 +55,7 @@ public class GetImageAsync extends AsyncTask<String, String, Bitmap> {
     @Override
     protected void onPostExecute(Bitmap bitmap) {
         super.onPostExecute(bitmap);
-        newsFunctions.displayImage(bitmap);
+//        newsFunctions.displayImage(bitmap);
         newsFunctions.dismissDialog();
     }
 
