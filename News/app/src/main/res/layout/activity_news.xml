@@ -61,8 +61,7 @@
         <ImageView
             android:id="@+id/current_image"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@android:drawable/ic_menu_rotate" />
+            android:layout_height="match_parent" />
     </LinearLayout>
 
     <LinearLayout

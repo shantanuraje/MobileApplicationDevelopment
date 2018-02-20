@@ -13,11 +13,11 @@ public interface NewsFunctions {
 
     /*void loadKeywords(List<String> keywordsList);
 
-    void loadImageURLList(List<String> imageURLList);
-
     void getImageFromURL(String url);
 
     void displayImage(Bitmap bitmap);*/
+
+    void loadHeadlines(List<News> headlines);
 
     void dismissDialog();
 

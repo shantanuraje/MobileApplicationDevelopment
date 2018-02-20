@@ -28,7 +28,7 @@ import java.util.Random;
 
 public class NewsActivity extends AppCompatActivity implements NewsFunctions {
 
-    public static final String NEWS_URL = "https://newsapi.org/docs/endpoints/top-headlines";
+    public static final String NEWS_URL = "https://newsapi.org/v2/top-headlines";
     public static final String NEWS_COUNTRY = "us";
     public static final String API_KEY = "5dbfb20add3346c3ad007e38d5427d8e";
 //    public static final String IMAGES_URL = "http://dev.theappsdr.com/apis/photos/index.php";
@@ -222,7 +222,7 @@ public class NewsActivity extends AppCompatActivity implements NewsFunctions {
         this.categoryList = new ArrayList<>(categoryList);
     }
 
-    public void loadImageURLList(List<News> headlines) {
+    public void loadHeadlines(List<News> headlines) {
         this.headlines = headlines;
         if(headlines.size() > 0) {
             currentIndex = 0;
