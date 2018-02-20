@@ -1,6 +1,7 @@
 package mad.nil.news;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -17,7 +18,7 @@ import java.util.List;
 
 
 
-public class GetHeadlinesAsync extends AsyncTask<String, String, List<String>> {
+public class GetHeadlinesAsync extends AsyncTask<String, String, String> {
 
     NewsFunctions newsFunctions;
 
@@ -26,28 +27,26 @@ public class GetHeadlinesAsync extends AsyncTask<String, String, List<String>> {
     }
 
     @Override
-    protected List<String> doInBackground(String... params) {
+    protected String doInBackground(String... params) {
         List<String> photoUrlList = new ArrayList<>();
         HttpURLConnection connection = null;
         InputStream inputStream = null;
         String result = null;
+        String line;
 
         try {
             StringBuilder urlBuilder = new StringBuilder(params[0]);
             urlBuilder.append("?country=" + params[1] + "&category=" + params[2] + "&apiKey=" + params[3]);
+            Log.d("demo", urlBuilder.toString());
             URL url = new URL(urlBuilder.toString());
             connection = (HttpURLConnection) url.openConnection();
             connection.connect();
             if(connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
                 inputStream = connection.getInputStream();
                 BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-                while(true) {
-                    String photoUrl = reader.readLine();
-                    if(photoUrl == null || photoUrl.length() == 0) {
-                        break;
-                    }
-                    photoUrlList.add(photoUrl);
-                };
+                while ((line = reader.readLine()) != null) {
+                    result.concat(line);
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -64,11 +63,12 @@ public class GetHeadlinesAsync extends AsyncTask<String, String, List<String>> {
                 }
             }
         }
-        return photoUrlList;
+        Log.d("demo", result);
+        return result;
     }
 
     @Override
-    protected void onPostExecute(List<String> strings) {
+    protected void onPostExecute(String strings) {
         super.onPostExecute(strings);
         newsFunctions.dismissDialog();
     }
