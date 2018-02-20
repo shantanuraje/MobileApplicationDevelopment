@@ -3,8 +3,12 @@ package mad.nil.news;
 import java.util.Date;
 
 /**
- * Created by nilan on 2/19/2018.
+ * Inclass Assignment 6
+ * File name: News.java
+ * Nilanjan Mhatre (Student Id: 801045013)
+ * Shantanu Rajenimbalkar (Student Id: 800968033)
  */
+
 
 public class News {
     String title;

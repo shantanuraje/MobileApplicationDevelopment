@@ -5,8 +5,12 @@ import android.graphics.Bitmap;
 import java.util.List;
 
 /**
- * Created by nilan on 2/13/2018.
+ * Inclass Assignment 6
+ * File name: NewsFunctions.java
+ * Nilanjan Mhatre (Student Id: 801045013)
+ * Shantanu Rajenimbalkar (Student Id: 800968033)
  */
+
 
 
 public interface NewsFunctions {

@@ -1,3 +1,10 @@
+/**
+ * Inclass Assignment 6
+ * File name: NewsActivity.java
+ * Nilanjan Mhatre (Student Id: 801045013)
+ * Shantanu Rajenimbalkar (Student Id: 800968033)
+ */
+
 package mad.nil.news;
 
 import android.app.AlertDialog;
