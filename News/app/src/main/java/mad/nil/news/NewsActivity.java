@@ -23,6 +23,10 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.squareup.picasso.Picasso;
+
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -45,6 +49,10 @@ public class NewsActivity extends AppCompatActivity implements NewsFunctions {
     private int currentIndex;
     Dialog dialog;
     TextView dialogTextView;
+    ImageView imageView;
+    ProgressBar progressBar;
+    LinearLayout imageLinearLayout;
+    ImageButton retryImageButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,9 +66,21 @@ public class NewsActivity extends AppCompatActivity implements NewsFunctions {
         linearLayout.setLayoutParams(params);
         dialogTextView = new TextView(this);
         dialogTextView.setText(R.string.loading_keywords_message);
-        ProgressBar progressBar = new ProgressBar(this);
+        if(retryImageButton == null) {
+            retryImageButton = new ImageButton(this);
+            retryImageButton.setLayoutParams(params);
+            retryImageButton.setImageResource(R.drawable.retry);
+            retryImageButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    loadImage(headlines.get(currentIndex).getImageUrl());
+                }
+            });
+        }
         linearLayout.addView(dialogTextView);
-        linearLayout.addView(progressBar);
+        imageLinearLayout = findViewById(R.id.news_image);
+        imageView = new ImageView(this);
+        progressBar = new ProgressBar(this);
         dialog = new Dialog(this);
         dialog.setCancelable(false);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -79,18 +99,16 @@ public class NewsActivity extends AppCompatActivity implements NewsFunctions {
         Resources res = getResources();
 //        String[] planets = res.getStringArray(R.array.planets_array);
 
-        if(isConnected()) {
-            categoryList = new ArrayList<String>();
-            categoryList.add("business");
-            categoryList.add("entertainment");
-            categoryList.add("general");
-            categoryList.add("health");
-            categoryList.add("science");
-            categoryList.add("sports");
-            categoryList.add("technology");
+        categoryList = new ArrayList<String>();
+        categoryList.add("business");
+        categoryList.add("entertainment");
+        categoryList.add("general");
+        categoryList.add("health");
+        categoryList.add("science");
+        categoryList.add("sports");
+        categoryList.add("technology");
             //{"business", "entertainment", "general", "health", "science", "sports", "technology"};
 
-        }
 
         Button go = findViewById(R.id.go_button);
 
@@ -204,9 +222,9 @@ public class NewsActivity extends AppCompatActivity implements NewsFunctions {
     private void loadCurrentNews() {
         showDialog(getString(R.string.loading_photo_message));
         if(currentIndex >= 0) {
-            getImageFromURL(headlines.get(currentIndex).getImageUrl());
+            displayCurrentNews();
         } else {
-            displayImage(null);
+            loadImage(null);
         }
     }
 
@@ -254,27 +272,35 @@ public class NewsActivity extends AppCompatActivity implements NewsFunctions {
             currentIndex = -1;
             disableButtons();
         }
-        dismissDialog();
         loadCurrentNews();
     }
 
-    public void getImageFromURL(String url) {
-        if(isConnected()) {
-            new GetImageAsync(this).execute(url);
+    public void loadImage(String url) {
+        if(url == null) {
+            imageLinearLayout.removeAllViews();
+            imageLinearLayout.addView(retryImageButton);
         } else {
-            Toast.makeText(NewsActivity.this, R.string.no_internet, Toast.LENGTH_SHORT).show();
-            dismissDialog();
+            imageLinearLayout.removeAllViews();
+            imageLinearLayout.addView(progressBar);
+            Picasso.with(this).load(url).into(imageView);
+            imageLinearLayout.removeAllViews();
+            imageLinearLayout.addView(imageView);
         }
     }
 
-    public void displayImage(Bitmap bitmap) {
-        ImageView imageView = findViewById(R.id.current_image);
-        imageView.setImageBitmap(bitmap);
-    }
-
     public void displayCurrentNews() {
+        TextView title = findViewById(R.id.news_title);
+        TextView date = findViewById(R.id.news_date);
+        TextView description = findViewById(R.id.news_description);
+
         News news = headlines.get(currentIndex);
 
+        title.setText(news.getTitle());
+        date.setText(news.getPublishedAt());
+        description.setText(news.getDescription());
+
+        dismissDialog();
+        loadImage(news.getImageUrl());
     }
 
     public void dismissDialog() {

@@ -32,7 +32,6 @@ public class GetHeadlinesAsync extends AsyncTask<String, String, String> {
         HttpURLConnection connection = null;
         InputStream inputStream = null;
         String result = null;
-        String line;
 
         try {
             StringBuilder urlBuilder = new StringBuilder(params[0]);
@@ -44,9 +43,7 @@ public class GetHeadlinesAsync extends AsyncTask<String, String, String> {
             if(connection.getResponseCode() == HttpURLConnection.HTTP_OK) {
                 inputStream = connection.getInputStream();
                 BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
-                while ((line = reader.readLine()) != null) {
-                    result.concat(line);
-                }
+                result = reader.readLine();
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -70,6 +67,6 @@ public class GetHeadlinesAsync extends AsyncTask<String, String, String> {
     @Override
     protected void onPostExecute(String strings) {
         super.onPostExecute(strings);
-        newsFunctions.dismissDialog();
+        newsFunctions.loadHeadlinesDetails(strings);
     }
 }

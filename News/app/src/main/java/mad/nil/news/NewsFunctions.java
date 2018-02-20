@@ -10,12 +10,7 @@ import java.util.List;
 
 
 public interface NewsFunctions {
-
-    /*void loadKeywords(List<String> keywordsList);
-
-    void getImageFromURL(String url);
-
-    void displayImage(Bitmap bitmap);*/
+    void loadHeadlinesDetails(String jsonString);
 
     void loadHeadlines(List<News> headlines);
 
