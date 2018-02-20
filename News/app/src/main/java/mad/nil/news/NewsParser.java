@@ -31,12 +31,19 @@ public class NewsParser implements Runnable {
 
     @Override
     public void run() {
-        parseNewsJSON(jsonString);
+        ArrayList<News> headlines = parseNewsJSON(jsonString);
+
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("headlines", headlines);
+        Message message = new Message();
+        message.setData(bundle);
+
+        handler.sendMessage(message);
     }
 
-    public void parseNewsJSON(String jsonString) {
+    public ArrayList<News> parseNewsJSON(String jsonString) {
+        ArrayList<News> headlines = new ArrayList<>();
         try {
-            ArrayList<News> headlines = new ArrayList<>();
             JSONObject object = new JSONObject(jsonString);
             JSONArray articles = object.getJSONArray("articles");
             for(int i=0; i<articles.length(); i++) {
@@ -44,24 +51,35 @@ public class NewsParser implements Runnable {
                 News news = parseArticle(jsonObject);
                 headlines.add(news);
             }
-
-            Bundle bundle = new Bundle();
-            bundle.putSerializable("headlines", headlines);
-            Message message = new Message();
-            message.setData(bundle);
-
-            handler.sendMessage(message);
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        return headlines;
     }
 
     private News parseArticle(JSONObject jsonObject) throws  JSONException {
         News news = new News();
-        news.setTitle(jsonObject.getString("title"));
-        news.setDescription(jsonObject.getString("description"));
-        news.setImageUrl(jsonObject.getString("urlToImage"));
-        news.setPublishedAt(jsonObject.getString("publishedAt"));
+        String title = jsonObject.getString("title");
+        if(title == null || title.equals("null")) {
+            title = "";
+        }
+        String description = jsonObject.getString("description");
+        if(description == null || description.equals("null")) {
+            description = "";
+        }
+        String urlToImage = jsonObject.getString("urlToImage");
+        if(urlToImage == null || urlToImage.equals("null")) {
+            urlToImage = "";
+        }
+        String publishedAt = jsonObject.getString("publishedAt");
+        if(publishedAt == null || publishedAt.equals("null")) {
+            publishedAt = "";
+        }
+
+        news.setTitle(title);
+        news.setDescription(description);
+        news.setImageUrl(urlToImage);
+        news.setPublishedAt(publishedAt);
 
         return news;
     }

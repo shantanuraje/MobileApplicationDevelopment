@@ -51,8 +51,7 @@ public class GetHeadlinesAsync extends AsyncTask<String, String, String> {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            newsFunctions.dismissDialog();
-            if(connection !=null) {
+            if(connection != null) {
                 connection.disconnect();
             }
             if(inputStream != null) {
@@ -63,7 +62,6 @@ public class GetHeadlinesAsync extends AsyncTask<String, String, String> {
                 }
             }
         }
-        Log.d("demo", result);
         return result;
     }
 

@@ -32,6 +32,9 @@ public class News {
 
     public void setTitle(String title) {
         this.title = title;
+        if(title == null) {
+            this.title = "";
+        }
     }
 
     public String getPublishedAt() {
@@ -40,6 +43,9 @@ public class News {
 
     public void setPublishedAt(String publishedAt) {
         this.publishedAt = publishedAt;
+        if(publishedAt == null) {
+            this.publishedAt = "";
+        }
     }
 
     public String getImageUrl() {
@@ -56,6 +62,9 @@ public class News {
 
     public void setDescription(String description) {
         this.description = description;
+        if(description == null) {
+            this.description = "";
+        }
     }
 
     @Override

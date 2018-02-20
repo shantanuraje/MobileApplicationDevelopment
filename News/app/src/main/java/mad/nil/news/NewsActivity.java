@@ -9,6 +9,7 @@ package mad.nil.news;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.Resources;
@@ -19,6 +20,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
@@ -27,6 +29,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -54,6 +57,7 @@ public class NewsActivity extends AppCompatActivity implements NewsFunctions {
     private ArrayList<String> categoryList;
     private String currentKeyword;
     private int currentIndex;
+    ProgressDialog progressDialog;
     Dialog dialog;
     TextView dialogTextView;
     ImageView imageView;
@@ -93,6 +97,7 @@ public class NewsActivity extends AppCompatActivity implements NewsFunctions {
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(linearLayout);
         dialog.create();
+        progressDialog = new ProgressDialog(this);
         disableButtons();
     }
 
@@ -208,31 +213,22 @@ public class NewsActivity extends AppCompatActivity implements NewsFunctions {
 
     public void disableButtons() {
 
-        ImageView nextButton = findViewById(R.id.next_button);
-        ImageView previousButton = findViewById(R.id.previous_button);
-        nextButton.setClickable(false);
-        nextButton.setEnabled(false);
-        previousButton.setClickable(false);
-        previousButton.setEnabled(false);
+//        ImageView nextButton = findViewById(R.id.next_button);
+//        ImageView previousButton = findViewById(R.id.previous_button);
+//        nextButton.setClickable(false);
+//        nextButton.setEnabled(false);
+//        previousButton.setClickable(false);
+//        previousButton.setEnabled(false);
     }
 
     public void enableButtons() {
 
-        ImageView nextButton = findViewById(R.id.next_button);
-        ImageView previousButton = findViewById(R.id.previous_button);
-        nextButton.setClickable(true);
-        nextButton.setEnabled(true);
-        previousButton.setClickable(true);
-        previousButton.setEnabled(true);
-    }
-
-    private void loadCurrentNews() {
-        showDialog(getString(R.string.loading_photo_message));
-        if(currentIndex >= 0) {
-            displayCurrentNews();
-        } else {
-            loadImage(null);
-        }
+//        ImageView nextButton = findViewById(R.id.next_button);
+//        ImageView previousButton = findViewById(R.id.previous_button);
+//        nextButton.setClickable(true);
+//        nextButton.setEnabled(true);
+//        previousButton.setClickable(true);
+//        previousButton.setEnabled(true);
     }
 
     public void nextImage() {
@@ -253,16 +249,17 @@ public class NewsActivity extends AppCompatActivity implements NewsFunctions {
     }
 
     public void loadHeadlinesDetails(String jsonString) {
-        Handler handler = new Handler(new Handler.Callback() {
-            @Override
-            public boolean handleMessage(Message msg) {
-                NewsActivity.this.handleMessage(msg);
-                return true;
-            }
-        });
+//        Handler handler = new Handler(new Handler.Callback() {
+//            @Override
+//            public boolean handleMessage(Message msg) {
+//                NewsActivity.this.handleMessage(msg);
+//                return true;
+//            }
+//        });
 
-        ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(MAX_POOL_COUNT);
-        scheduler.schedule(new NewsParser(handler, jsonString), 2, TimeUnit.SECONDS);
+        /*ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(MAX_POOL_COUNT);
+        scheduler.schedule(new NewsParser(handler, jsonString), 2, TimeUnit.SECONDS);*/
+        loadHeadlines(new NewsParser(null, jsonString).parseNewsJSON(jsonString));
     }
 
     public void loadHeadlines(List<News> headlines) {
@@ -285,46 +282,62 @@ public class NewsActivity extends AppCompatActivity implements NewsFunctions {
     public void loadImage(String url) {
         if(url == null) {
             imageLinearLayout.removeAllViews();
-            imageLinearLayout.addView(retryImageButton);
-        } else {
+        } else if(url != null && !url.equals("")) {
             imageLinearLayout.removeAllViews();
-            imageLinearLayout.addView(progressBar);
             Picasso.with(this).load(url).into(imageView);
-            imageLinearLayout.removeAllViews();
             imageLinearLayout.addView(imageView);
         }
     }
 
-    public void displayCurrentNews() {
+    public void loadCurrentNews() {
+        showDialog(getString(R.string.loading_news_message));
         TextView title = findViewById(R.id.news_title);
         TextView date = findViewById(R.id.news_date);
-        TextView description = findViewById(R.id.news_description);
+        final TextView description = findViewById(R.id.news_description);
 
         News news = headlines.get(currentIndex);
 
+        description.setText(news.getDescription());
+        final ScrollView mScrollView = findViewById(R.id.SCROLLER_ID);
+        mScrollView.post(new Runnable() {
+            public void run() {
+                mScrollView.smoothScrollTo(0, description.getBottom());
+            }
+        });
         title.setText(news.getTitle());
         date.setText(news.getPublishedAt());
-        description.setText(news.getDescription());
+        description.setMovementMethod(new ScrollingMovementMethod());
 
-        dismissDialog();
+        loadStatus();
+//        imageLinearLayout.addView(progressBar);
         loadImage(news.getImageUrl());
+        dismissDialog();
     }
 
     public void dismissDialog() {
-        dialog.dismiss();
+        progressDialog.dismiss();
     }
 
     public void showDialog(String message) {
         if(message == null || message.equals("")) {
             message = getString(R.string.default_loading_message);
         }
-        dialogTextView.setText(message);
-        dialog.show();
+        progressDialog.setTitle(message);
+        progressDialog.show();
     }
 
     public void handleMessage(Message message) {
         Bundle bundle = message.getData();
         headlines = (List<News>) bundle.getSerializable("headlines");
         loadHeadlines(headlines);
+    }
+
+    public void loadStatus() {
+        TextView textView = findViewById(R.id.status_text);
+        StringBuilder builder = new StringBuilder();
+        builder.append(currentIndex + 1);
+        builder.append(" out of ");
+        builder.append(headlines.size());
+        textView.setText(builder.toString());
     }
 }
